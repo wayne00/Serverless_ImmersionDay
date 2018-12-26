@@ -62,15 +62,15 @@
 ![14](./img/img14.png)
 
 2. 命名，并配置主键
-给数据库表定义一个名称（跟其他表不要冲突），并设置主键为“id”，主键要跟后面的查询代码一致
+给数据库表定义一个名称（跟其他表不要冲突），并设置主键，例如“id”
 ![15](./img/img15.png)   
 
-3. 数据库中创建记录
-为你的数据库表创建一些记录，类似如下，字段名称跟后面的代码要一致
+1. 数据库中创建记录
+为你的数据库表创建一些记录，类似如下
 ![16](./img/img16.png)
 有没留意到，这个数据库创建记录的过程并没有先定义字段，而是新增记录的同时就自动完成了新建字段的过程  
 
-4. 用Lambda访问DynamoDB
+1. 用Lambda访问DynamoDB
 在Lambda的代码界面用以下的代码代替原来的代码，注意修改数据库表名称 TableName='your_DynamoDB_name'
 ```
 import json
@@ -83,7 +83,7 @@ def lambda_handler(event, context):
     
     return {
         'statusCode': 200,
-        'body': (json.dumps(response, indent=4))
+        'body': (json.dumps(response, indent=4, ensure_ascii=False))
     }
 ```
 代码替换后的效果如下图，记得保存
@@ -108,3 +108,11 @@ def lambda_handler(event, context):
 
 4. 修改Lambda的执行角色，为新建的角色  
 ![23](./img/img23.png)
+
+## 思考  
+
+* Lambda 的运行内存应该设置多少，是否越大或越小越好？
+* 为什么不用设置 CPU ？
+* 为什么需要超时时间？
+* 什么情况下需要 VPC，Lambda运行在哪？
+* Lambda 支持什么开发语言？不在列表上的能支持吗？
