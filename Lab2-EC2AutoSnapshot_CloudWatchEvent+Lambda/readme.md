@@ -68,7 +68,7 @@ Cron表达式的写法可以[参考文档](https://docs.amazonaws.cn/AmazonCloud
 
 这个Tag名称是触发Lambda时区分对不同EC2进行不同频率快照的重要区分。
 
-1. 对 EC2 实例打Tag(标签)  
+4. 对 EC2 实例打Tag(标签)  
 
 * 对执行每小时快照一次的实例增加Tag：SnapshotHourly，Tag的值为保留快照的数量  
 * 对执行每天快照一次的实例增加Tag：SnapshotDaily，Tag的值为保留快照的数量  
