@@ -61,14 +61,14 @@ CloudWatch 控制台，新建 Event Rules
 Cron表达式的写法可以[参考文档](https://docs.amazonaws.cn/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)  
 例如：  
 每天中午12点(UTC)：0 12 * * ? *    
-下一个示例创建从 2002 到 2005 年在每个月最后一个周五的上午 10:15 (UTC)：15 10 ? * 6L 2002-2005   
+从 2002 到 2005 年在每个月最后一个周五的上午 10:15 (UTC)：15 10 ? * 6L 2002-2005   
   
 * 每天UTC时间0点执行一次，也就是北京时间8点
 ![3](./img/img3.png)
 
 这个Tag名称是触发Lambda时区分对不同EC2进行不同频率快照的重要区分。
 
-4. 对 EC2 实例打Tag(标签)  
+1. 对 EC2 实例打Tag(标签)  
 
 * 对执行每小时快照一次的实例增加Tag：SnapshotHourly，Tag的值为保留快照的数量  
 * 对执行每天快照一次的实例增加Tag：SnapshotDaily，Tag的值为保留快照的数量  
