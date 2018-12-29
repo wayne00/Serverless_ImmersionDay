@@ -5,7 +5,7 @@
 * 可以设定该EC2每个卷保留多少个最新的快照，老的快照自动删除
 * 由CloudWatch定时任务自动触发Lambda实现
 * 可以设置快照的间隔周期，或者设定某个具体时间，例如每天8点执行，可以有多个定时策略同时存在
-* 可以手工保留某一个快照，不被自动删除。将该快照的自动Tag修改或删除即可。
+* 可以手工保留某一个快照，不被自动删除。将该快照的Tag修改或删除即可。
 
 1. 创建 Lambda 执行角色  
 创建以下执行权限的角色，授信实体是 Lambda
@@ -44,11 +44,11 @@
     [auto_snapshot_lambda.py](./auto_snapshot_lambda.py)
 
 ** 代码详解 **
-* 调用 EC2 的 describe_instances 接口查询所有实例，只过滤出 Tag 带 SnapshotKeyWord 标签的实例。SnapshotKeyWord 来自下一步 CloudWatch Event 触发时候带过来。不同的定时执行计划，采用不同的 Tag。
-* 为有对应 Tag 的 EC2 的每个卷，调用接口 create_snapshot 进行快照，快照带上 EC2 所带的所有 Tag。
-* 调用 describe_snapshots 接口查询该卷的所有带对应 Tag 的快照，数一下如果超过EC2这个Tag所带的值，则调用 delete_snapshot 删掉最老的几个快照。所以如果快照要长期保留，只要把快照的这个 Tag 去掉即可，没有了 Tag 那在 describe_snapshots 就会被过滤掉，不查出来。
+* 调用 EC2 的 describe_instances 接口查询所有实例，只过滤出 Tag 带 SnapshotKeyWord 标签的实例。SnapshotKeyWord 来自 CloudWatch Event 触发时候带过来。不同的定时执行计划，采用不同的 Tag ，调用的是同一个 Lambda 即可。
+* 为有对应 Tag 的 EC2 的每个卷，调用接口 create_snapshot 进行快照，快照也打 Tag 带上 EC2 的所有 Tag。
+* 调用 describe_snapshots 接口查询该卷的所有带对应 Tag 的快照，数一下如果超过EC2这个Tag所设定的值，则调用 delete_snapshot 删掉最老的几个快照。所以如果快照要长期保留，只要把快照的这个 Tag 去掉即可，没有了 Tag 那在 describe_snapshots 就会被过滤掉，不查出来。
 
-3. 配置 CloudWatch 定时计划  
+1. 配置 CloudWatch 定时计划  
 CloudWatch 控制台，新建 Event Rules
 
 ![1](./img/img1.png)
@@ -76,3 +76,4 @@ CloudWatch 控制台，新建 Event Rules
 * Lambda 设置的超时时间，不应大于两次 Event 触发的间隔
 * 考虑更完善的处理保护，应该在代码中的几个 TODO 位置加上对执行失败的通知 SNS 调用，发邮件通知管理员。另外，再加配置 Lambda 的 DLQ （私信队列）对执行失败通知 SNS。（注意增加Lambda的SNS调用权限）
 * 查询 describe instance 的时候如果要考虑可能出现超过1000个匹配实例的情况的话，应该增加对返回结果 NextToken 的处理，以便获得完整的实例列表。
+* 在2018年4月，Create Snapshot 接口支持了打快照的同时就打上 Tag ，本项目的代码得益于此功能，得到简化。注意在建Lambda执行角色的时候要配上 CreateTag 的权限。
