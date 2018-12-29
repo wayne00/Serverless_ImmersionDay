@@ -81,7 +81,11 @@ Cron表达式的写法可以[参考文档](https://docs.amazonaws.cn/AmazonCloud
 如果想手工地永久保留某个快照，则删除其Tag。该快照不会被删除，还会额外有3个快照。  
 ![5](./img/img5.png)
 
-
+6. 监控Rule执行  
+在 Rule 里面点 Monitor 就可以看到 Rule 被触发的情况，确实每小时一次  
+![6](./img/img6.png)  
+![7](./img/img7.png)  
+   
 ## 其他
 
 * 代码中对快照没有启用加密，如果要加密，则在接口调用时加上相应参数
