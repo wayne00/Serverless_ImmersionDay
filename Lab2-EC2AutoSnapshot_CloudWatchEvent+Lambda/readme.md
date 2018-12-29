@@ -48,7 +48,7 @@
 * 为有对应 Tag 的 EC2 的每个卷，调用接口 create_snapshot 进行快照，快照也打 Tag 带上 EC2 的所有 Tag。
 * 调用 describe_snapshots 接口查询该卷的所有带对应 Tag 的快照，数一下如果超过EC2这个Tag所设定的值，则调用 delete_snapshot 删掉最老的几个快照。所以如果快照要长期保留，只要把快照的这个 Tag 去掉即可，没有了 Tag 那在 describe_snapshots 就会被过滤掉，不查出来。
 
-1. 配置 CloudWatch 定时计划  
+3. 配置 CloudWatch 定时计划  
 CloudWatch 控制台，新建 Event Rules
 
 ![1](./img/img1.png)
