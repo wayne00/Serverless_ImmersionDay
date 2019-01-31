@@ -66,7 +66,8 @@ Cron表达式的写法可以[参考文档](https://docs.amazonaws.cn/AmazonCloud
 * 每天UTC时间0点执行一次，也就是北京时间8点
 ![3](./img/img3.png)
 
-这个Tag名称是触发Lambda时区分对不同EC2进行不同频率快照的重要区分。
+这个Tag名称是触发Lambda时区分对不同EC2进行不同频率快照的重要区分。这里例子设置：  
+    {"SnapshotKeyWord": "SnapshotDaily"}
 
 4. 对 EC2 实例打Tag(标签)  
 
