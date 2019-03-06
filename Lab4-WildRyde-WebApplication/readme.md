@@ -49,8 +49,8 @@ Step-By-Step 操作指引
   
 通过控制台上传实验文件  
 1. 通过如下链接下载本次实验的文件内容  
-https://s3.cn-northwest-1.amazonaws.com.cn/serverless-tutorial-camp-bucket/aws-serverless-workshop.zip  
-2. 解压缩后把tutorial文件夹（不包含tutorial文件夹）内的所有内容通过网页控制台上传到刚才创建的S3存储桶内,可以直接全选文件夹内的所有内容，通过鼠标拖拽到上传界面(请不要通过“上传文件”按钮的方式上传文件)。请保证内容里的所有文件（包括文件夹）都在上传范围内。  
+[WildRydes-aws-serverless-workshop.zip](./WildRydes-aws-serverless-workshop.zip)  
+1. 解压缩后把tutorial文件夹（不包含tutorial文件夹）内的所有内容通过网页控制台上传到刚才创建的S3存储桶内,可以直接全选文件夹内的所有内容，通过鼠标拖拽到上传界面(请不要通过“上传文件”按钮的方式上传文件)。请保证内容里的所有文件（包括文件夹）都在上传范围内。  
 ![upload](./img/Picture5.png)
 
 3. 点击上传等到文件全部导入S3存储桶内
