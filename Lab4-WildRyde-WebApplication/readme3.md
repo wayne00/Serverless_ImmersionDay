@@ -1,4 +1,4 @@
-## 集成API Gateway 构建RESTful APIs
+## 第三节：集成API Gateway 构建RESTful APIs
 
 在本单元中，您将使用API Gateway将您在上一个模块中构建的Lambda函数公开为RESTful API,此API可在Internet上访问。使用此配置，您将通过添加客户端JavaScript将您的静态托管网站转换为动态Web应用程序，通过调用AJAX去暴露API。  
 ![arch](./img/PictureC1.png)

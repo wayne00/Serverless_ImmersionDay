@@ -14,7 +14,7 @@
 * 无服务器后台
 * RESTful API 集成
 
-## Amazon S3静态网站托管
+## 第一节：Amazon S3静态网站托管
 
 在此模块中，您将配置Amazon Simple Storage Service（S3）以托管Web应用程序的静态资源。在后续模块中，您将使用JavaScript为这些页面添加动态功能，以调用使用AWS Lambda和Amazon API Gateway构建的远程RESTful API。
 
