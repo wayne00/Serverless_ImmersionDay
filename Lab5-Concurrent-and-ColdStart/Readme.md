@@ -23,9 +23,7 @@
     var params = {
         FunctionName: function_name, 
         InvocationType: "Event",
-        Payload: "{
-            "Tag": "Pre-warm"
-        }"
+        Payload: "{}"
         };
         
     exports.handler = (event) => {
