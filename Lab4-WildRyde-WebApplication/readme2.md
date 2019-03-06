@@ -12,8 +12,8 @@
 2. 进入DynamoDB主界面后，选择“创建表”
 * 表名称：Rides（注意大小写敏感）
 * 主键（分区键）：RideId（注意大小写敏感），类型选择为“字符串”
-* 表设置: 勾选“使用默认设置”
-![ddb](./img/PictureB2.png)
+* 表设置: 勾选“使用默认设置”  
+![ddb](./img/PictureB2.png)  
 * 点击“创建”
 * 在“”表详细信息栏里获取Amazon 资源名称 (ARN), 把对应的值记录下来将会用在下一个操作
 
@@ -37,7 +37,7 @@
 o	服务：DynamoDB  
 o	操作：PutItem，可在搜索栏上筛选PutItem  
 o	资源：选择“特定”，点击“添加ARN”，输入刚才创建DynamoDB表后记录下来的ARN信息  
-o	填写完ARN后，Region, Account, Table name这三个字段会自动填充。  
+o	填写完ARN后，Region, Account, Table name这三个字段会自动填充。    
 ![iam](./img/PictureB7.png) 
 10. 点击“Review Policy”
 11. 输入名称“DynamoDBWriteAccess”，然后点击“Create Policy”
