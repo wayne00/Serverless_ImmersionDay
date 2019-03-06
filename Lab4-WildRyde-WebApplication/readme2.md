@@ -23,7 +23,7 @@
 2. 在左侧导航栏中选择“角色”，然后选择“创建角色”
 3. 从AWS服务组中为角色类型选择Lambda，然后单击“下一步：权限”
 ![iam](./img/PictureB3.png)
-4. 在“Attach权限策略”中，通过搜索栏键入“AWSLambdaBasicExecutionRole”，当搜索结果出来后勾选此项，并点击“下一步：审核”
+4. 在“Attach权限策略”中，通过搜索栏键入“AWSLambdaBasicExecutionRole”，当搜索结果出来后勾选此项，并点击“下一步：审核”  
 ![iam](./img/PictureB4.png)
 5. 在审核信息中填入如下内容  
 角色名称：WildRydesLambda  
