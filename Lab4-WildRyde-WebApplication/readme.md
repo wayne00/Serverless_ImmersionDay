@@ -1,7 +1,7 @@
 # Serverless Web 应用（动静分离）
 
 ## 前言
-在本实验中，将部署一个简单的Web应用程序，使用户可以从Wild Rydes请求发送一个独角兽。该应用将向用户提供web界面，用户点击他们想要获取的位置，并向后端RESTful Web服务接口发起请求。
+在本实验中，将部署一个简单的Web应用程序(Wild Rydes)，使用户可以请求发送一个独角兽。该应用将向用户提供web界面，用户点击他们想要获取的位置，并向后端RESTful Web服务接口发起请求。
 
 使用 AWS Lambda，Amazon API Gateway，Amazon S3，Amazon DynamoDB。 S3托管静态 Web 资源，包括在用户浏览器中加载的 HTML，CSS，JavaScript 和图像文件。在浏览器中执行的 JavaScript 向 API Gateway 发起动态请求，触发 Lambda 处理，并在 DynamoDB 进行数据持久。
 
