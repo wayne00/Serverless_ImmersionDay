@@ -1,29 +1,29 @@
 # Serverless Web 应用（动静分离）
 
 ## 前言
-在本次实验中，您将部署一个简单的Web应用程序，使用户可以从Wild Rydes车队请求独角兽乘坐。该应用程序将向用户提供基于HTML的用户界面，用于指示他们想要获取的位置，并在后端与RESTful Web服务接口对接以提交请求并派遣附近的独角兽。
+在本实验中，将部署一个简单的Web应用程序，使用户可以从Wild Rydes请求发送一个独角兽。该应用将向用户提供web界面，用户点击他们想要获取的位置，并向后端RESTful Web服务接口发起请求。
 
-应用程序体系结构使用AWS Lambda，Amazon API Gateway，Amazon S3，Amazon DynamoDB。 S3托管静态Web资源，包括在用户浏览器中加载的HTML，CSS，JavaScript和图像文件。在浏览器中执行的JavaScript从使用Lambda和API Gateway构建的公共后端API发送和接收数据。最后，DynamoDB提供了一个持久层，可以通过API的Lambda函数存储数据。
+使用 AWS Lambda，Amazon API Gateway，Amazon S3，Amazon DynamoDB。 S3托管静态 Web 资源，包括在用户浏览器中加载的 HTML，CSS，JavaScript 和图像文件。在浏览器中执行的 JavaScript 向 API Gateway 发起动态请求，触发 Lambda 处理，并在 DynamoDB 进行数据持久。
 
-请参阅下图，以了解完整的体系结构。目前本实验不涉及 Cognito 这部分。  
+架构如下。目前本实验暂不涉及 Cognito 这部分。  
 
 ![架构](./img/Picture1.png)
 
-该研讨会分为多个模块，您必须在继续下一个模块之前完成每个模块。
+该实验分为4节，您需要完成前一节的模块部署再进行下一节。
 * 静态网站托管
 * 无服务器后台
 * RESTful API 集成
 
 ## 第一节：Amazon S3静态网站托管
 
-在此模块中，您将配置Amazon Simple Storage Service（S3）以托管Web应用程序的静态资源。在后续模块中，您将使用JavaScript为这些页面添加动态功能，以调用使用AWS Lambda和Amazon API Gateway构建的远程RESTful API。
+您将配置 Amazon Simple Storage Service（S3）以托管Web应用程序的静态资源。下一节您将使用 JavaScript 为这些页面添加动态功能，以调用 Amazon API Gateway 构建的 RESTful API。
 
 ### 架构概览
-该模块的架构非常简单。所有静态Web内容（包括HTML，CSS，JavaScript，图像和其他文件）都将存储在Amazon S3中。然后，您的最终用户将使用Amazon S3公开的公共网站URL访问您的网站。您无需运行任何Web服务器或使用其他服务即可使您的站点可用。
+该架构非常简单。所有静态Web内容（包括HTML，CSS，JavaScript，图像和其他文件）都将存储在Amazon S3中。最终用户将使用Amazon S3公开的URL访问您的网站。您无需运行任何Web服务器或使用其他服务即可使您的站点可用。
 
 ![架构](./img/Picture2.png)
 
-出于本模块的目的，您将使用我们提供的Amazon S3网站端点URL。它的格式为http：// {your-bucket-name} .s3-website- {region} .amazonaws.com.cn。对于大多数实际应用程序，您需要使用自定义域来托管您的站点。如果您对使用自己的域感兴趣，请按照Amazon S3文档中使用自定义域设置静态网站的说明进行操作。
+您将使用Amazon S3网站端点URL。它的格式为http：// {your-bucket-name} .s3-website- {region} .amazonaws.com.cn。对于大多数生产环境，您需要使用自定义域来托管您的站点。
 
 ### 创建S3存储桶
 
