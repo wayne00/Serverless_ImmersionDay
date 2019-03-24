@@ -83,9 +83,15 @@ S3distcp 参考文件：https://docs.aws.amazon.com/zh_cn/emr/latest/ReleaseGuid
 
 ## 注意  
 * Lambda 最长运行时间为 15分钟。虽然Lambda不参与加载的数据流，Lambda下发COPY命令给 Redshift后，Redshift自己去S3 COPY的，但Lambda需要继续运行直到加载结束，否则无法完成数据 commit
-* S3中保存的数据文件是碎片式的，所以数据量大的时候最后先在EMR中进行ETL文件合并，然后再加载
+* S3中保存的数据文件是碎片式的，所以数据量大的时候建议先进行文件合并，然后再加载。例如使用EMR（S3distcp）进行
 * DynamoDB 的 Partition Key 设计应该要分散，不要让大量数据在同一时间写入到同一个 partition，保证其并发写入能力
 * 为了减少S3的碎片文件，让 Lambda 能获取更多的 DynamoDB stream的数据之后再写入 S3。这样除了要把Lambda配置DynamoDB的批处理数量为100之外，还可以配置控制 Lambda 的并发数，例如数据流量不大的时候，控制并发为 1。这样所有数据都强迫走同一个 Lambda。
 * 注意 Lambda 的运行超时时间的设置，避免运行超时失败的情况。
 * 小心 Stream 毒丸。因为 Stream 模式触发Lambda是无限重试的。也就是说如果 DynamoDB 触发 Lambda 处理，处理失败则会一直重试同一个数据，直到数据失效为止，所以代码要特别小心处理所有exception的情况。
 * S3 或 CloudWatch 触发Lambda的情况是异步模式，会重试两次，再失败则会进入死信队列（DLQ），请给控制 Redshift 加载数据的那个Lambda配置DLQ，以便出现异常的情况能够通知SNS，或者执行另一个Lambda进行自动化排障处理。
+
+## 延伸
+* 以上是对实时写入DDB的数据Stream到S3中，而如果是对存量的大量的DDB数据呢？能否使用Lambda来实现而又避免15分钟超时？以下处理选项是两种可行的方式，主要针对Key能顺序检索的表:
+  1. 使用 StepFunction。由StepFunction触发启动Lambda，读取DDB数据的同时在Lambda函数代码中监控运行的时间，超过14分钟，就结束函数并把最后获取到的DDB记录的Key关键字返回 StepFunction ，StepFunction 把Key再重新触发 Lambda 并传入参数 Key，Lambda从这个Key后面开始继续读取。  
+  StepFunction 是非常便利的状态机服务，天生高可用，并可设置自动重试和超时等控制
+  2. 对于方法1的一个变种，不使用 StepFunction，而使用一个独立的DDB表来做 StepFunction 的工作。Lambda 执行到14分钟就结束并把最后的Key写入到这个独立的DDB，DDB Stream再触发Lambda（自动带上了新写入的Key），Lambda从收到的Key之后继续取DDB的数据
